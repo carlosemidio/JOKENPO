@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Jogo</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="jquery-ui-1.12.1.custom/jquery-ui.css">
+
+	<script src="jquery-ui-1.12.1.custom/external/jquery/jquery.js"></script>
+	<script src="jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+</head>
+<body>
+	<div id="overlay"></div>
+	<div class="game">
+		<div class="points">
+			<p id="points">000</p>
+		</div>
+		<div class="life"></div>
+
+		<div id="cachorro" class="sorrindo">
+			<p id="expression" class="text">Text</p>
+		</div>
+
+		<div class="botoes">
+			<button id="b1" class="botao1">
+				<p id="result1">100</p>
+				<div class="botao2">
+				</div>
+			</button>
+
+			<button id="b2" class="botao1">
+				<p id="result2">100</p>
+				<div class="botao2">
+				</div>
+			</button>
+
+			<button id="b3" class="botao1">
+				<p id="result3">100</p>
+				<div class="botao2">
+				</div>
+			</button>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var width = 100;
+		var result = 0;
+		var expressionSinbol = "";
+		var points = 0;
+		var timer = 1000;
+		var life = 2;
+		var playerName = "";
+		var interval = null;
+		var correct = false;
+
+		function generateExpression(){
+			var number1 = Math.floor(Math.random() * 10), number2 = Math.floor(Math.random() * 10);
+			var expression = Math.floor(Math.random() * 3);
+
+			if (expression == 0) {
+				expressionSinbol = "+";
+				result = number1 + number2;
+			}
+			else if (expression == 1) {
+				expressionSinbol = "-";
+				result = number1 - number2;
+			}
+			else if (expression == 2) {
+				expressionSinbol = "*";
+				result = number1 * number2;
+			}
+
+			$("#expression").text(number1+" "+expressionSinbol+" "+number2);
+			
+			var position = Math.floor(Math.random() * 3);
+
+			if (position == 0) {
+				$("#result1").text(result);
+				var position = Math.floor(Math.random() * 2);
+				if (position == 0) {
+					$("#result2").text(result-2);
+					$("#result3").text(result+2);
+				}
+				else{
+					$("#result3").text(result+2);
+					$("#result2").text(result-2);
+				}				
+			}
+
+
+			else if (position == 1) {
+				$("#result2").text(result);
+				var position = Math.floor(Math.random() * 2);
+				if (position == 0) {
+					$("#result1").text(result-2);
+					$("#result3").text(result+2);
+				}
+				else{
+					$("#result3").text(result+2);
+					$("#result1").text(result-2);
+				}				
+			}
+
+
+			else if (position == 2) {
+				$("#result3").text(result);
+				var position = Math.floor(Math.random() * 2);
+				if (position == 0) {
+					$("#result1").text(result-2);
+					$("#result2").text(result+2);
+				}
+				else{
+					$("#result2").text(result+2);
+					$("#result1").text(result-2);
+				}				
+			}
+		}
+
+		$(document).ready(function(){
+			generateExpression();
+		});
+
+		function reduce(){
+			if(width > 0){
+				width = width-10;
+				$(".botao2").css("width", width+"%");
+				$(".botao2").css("margin-left", ((100-width)/2)+"%");
+				$(".botao2").css("margin-right", ((100-width)/2)+"%");
+			}
+			else{
+				width = 100;
+				if (correct != true) {
+					life -= 1;	
+				}
+				
+				correct = false;
+
+				generateExpression();
+				<!--Level-->
+				if(timer > 500){
+					timer -= 10;
+				}
+				lifeState();
+			}
+		}
+
+		interval = setInterval(function(){ reduce(Math.floor((Math.random() * 10))); }, timer);
+
+		function myFunction(){
+		    var x;
+		    playerName=prompt("Please enter your name","Harry Potter");
+		    if (playerName!=null){
+		       x="Player name: " + playerName + "  Score: "+points;
+		      alert(x);
+		   }
+
+		   <!-- Larisse, é aqui que você deve mandar os valores de #playerName e #points para a API-->
+
+		   $("#overlay").hide();
+		}
+
+		function lifeState(){
+		    if(life == 1){
+    				$('.life').css("background-image", "url(img/life2.png)");
+    				$('#cachorro').removeClass('sorrindo').addClass('preocupado');
+    			}
+			else if (life == 0) {
+				$('.life').css("background-image", "url(img/life1.png)");
+				$('#cachorro').removeClass('preocupado').addClass('chorando');
+				clearInterval(interval);
+				$("#overlay").show();
+				myFunction();
+			}
+		}
+
+		$("#b1").click(function(e){
+    		if($("#b1>p").text() == result+""){
+    			points += 10;
+    			$("#points").text(points);
+    			generateExpression();
+    			width = 0;
+    			correct = true;
+    			reduce();
+    		}
+    		else{
+    			generateExpression();
+    			width = 0;
+    			reduce();
+    		}
+		});
+
+		$("#b2").click(function(e){
+    		if($("#b2>p").text() == result+""){
+    			points += 10;
+    			$("#points").text(points);
+    			generateExpression();
+    			width = 0;
+    			correct = true;
+    			reduce();
+    		}
+    		else{
+    			generateExpression();
+    			width = 0;
+    			reduce();
+    		}
+		});
+
+		$("#b3").click(function(e){
+    		if($("#b3>p").text() == result+""){
+    			points += 10;
+    			$("#points").text(points);
+    			generateExpression();
+    			width = 0;
+    			correct = true;
+    			reduce();
+    		}
+    		else{
+    			generateExpression();
+    			width = 0;
+    			reduce();
+    		}
+		});
+	</script>
+</body>
+</html>
