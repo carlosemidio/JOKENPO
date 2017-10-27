@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo"></p>
+
+<script>
+
+var date = new Date();
+
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+
+var myVar = setInterval(function(){ myFunction() }, 1000);
+
+function myFunction() {
+    var d = new Date();
+    var x = document.getElementById("demo");
+    var h = addZero(d.getHours() - oldhour);
+    var m = addZero(d.getMinutes() - oldMinute);
+    var s = addZero(d.getSeconds() - oldSeconds);
+    x.innerHTML = h + ":" + m + ":" + s;
+}
+</script>
+
+</body>
+</html>

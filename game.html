@@ -64,42 +64,48 @@
 		        if($( this ).attr('id') == "pedra"){
 		        	if (acaoPC == 0) {
 		        		alert("Empate!");
+		        		pontosPC += 1;
+						pontosPlayer += 1;
 		        	}
 		        	else if(acaoPC == 1){
 		        		alert("Você perdeu!");
-		        		pontosPC += 1;
+		        		pontosPC += 3;
 		        	}
 		        	else{
 		        		alert("Você ganhou!");
-		        		pontosPlayer += 1;
+		        		pontosPlayer += 3;
 		        	}
 		        }
 
 		        if($( this ).attr('id') == "papel"){
 		        	if (acaoPC == 0) {
 		        		alert("Você ganhou!");
-		        		pontosPlayer += 1;
+		        		pontosPlayer += 3;
 		        	}
 		        	else if(acaoPC == 1){
 		        		alert("Empate!");
+		        		pontosPC += 1;
+						pontosPlayer += 1;
 		        	}
 		        	else{
 		        		alert("Você perdeu!");
-		        		pontosPC += 1;
+		        		pontosPC += 3;
 		        	}
 		        }
 
 		        if($( this ).attr('id') == "tesoura"){
 		        	if (acaoPC == 0) {
 		        		alert("Você perdeu!");
-		        		pontosPC += 1;
+		        		pontosPC += 3;
 		        	}
 		        	else if(acaoPC == 1){
 		        		alert("Você ganhou!");
-		        		pontosPlayer += 1;
+		        		pontosPlayer += 3;
 		        	}
 		        	else{
 		        		alert("Empate!");
+		        		pontosPC += 1;
+						pontosPlayer += 1;
 		        	}
 		        }
 
@@ -109,41 +115,12 @@
 		    });
 		});
 
-
-		var intervalo;
-
-		function tempo(op) {
-		    if (op == 1) {
-				document.getElementById('parar').style.display = "block";
-				document.getElementById('comeca').style.display = "none";
-			}
-			var s = 1;
-			var m = 0;
-			var h = 0;
-			intervalo = window.setInterval(function() {
-				if (s == 60) { m++; s = 0; }
-				if (m == 60) { h++; s = 0; m = 0; }
-				if (h < 10) document.getElementById("hora").innerHTML = "0" + h + "h"; else document.getElementById("hora").innerHTML = h + "h";
-				if (s < 10) document.getElementById("segundo").innerHTML = "0" + s + "s"; else document.getElementById("segundo").innerHTML = s + "s";
-				if (m < 10) document.getElementById("minuto").innerHTML = "0" + m + "m"; else document.getElementById("minuto").innerHTML = m + "m";		
-				s++;
-			},1000);
+		function Jogador(_nome, _sexo, _tipoJogador) {
+			this.Nome = _nome;
+			this.Sexo = _sexo;
+			this.TipoJogador = _tipoJogador;
 		}
 
-		function parar() {
-			window.clearInterval(intervalo);
-			document.getElementById('parar').style.display = "none";
-			document.getElementById('comeca').style.display = "block";
-		}
-
-		function volta() {
-			document.getElementById('voltas').innerHTML += document.getElementById('hora').firstChild.data + "" + document.getElementById('minuto').firstChild.data + "" + document.getElementById('segundo').firstChild.data + "<br>";
-		}
-
-		function limpa() {
-			document.getElementById('voltas').innerHTML = "";
-		}
-		window.onload=tempo;
 	</script>
 </body>
 </html>
