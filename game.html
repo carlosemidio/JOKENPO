@@ -18,7 +18,7 @@
 			<div class="col-md-12">
 				<div class="col-md-4 col-md-offset-4 vertical-center">
 					<form action="#" id="playerInfo">
-					  	<input class="col-md-12" type="text" id="playerName" name="playerName" placeholder="Name"><br>
+					  	<input class="col-md-12 form-control" type="text" id="playerName" name="playerName" placeholder="Name"><br>
 					  	<div class="col-md-12">
 					  		Sexo: <select class="form-control" id="playerSexo">
 					  		<option value="masculino">Masculino</option>
@@ -27,8 +27,18 @@
 					  	</div>
 					  	
 					  <button type="button" id="jogar" class="btn btn-primary col-md-8 col-md-offset-2" onclick="novoJogo()">Jogar</button>
+
+					  <button type="button" id="scoresButton" class="btn btn-primary col-md-8 col-md-offset-2" onclick="showScores()">Scores</button>
 					</form>
 				</div>
+			</div>
+		</div>
+
+		<div class="row" id="scoresTable">
+			<div class="col-md-12">
+				<table style="width:100%" id="mytable">
+				  
+				</table>
 			</div>
 		</div>
 
@@ -79,133 +89,8 @@
 		</div>
 	</div>
 
+	<script type="text/javascript" src="jokenpo.js"></script>
 
-
-
-	<script type="text/javascript">
-
-		var pcPont = 0;
-		var playerPont = 0;
-
-		var pName = '';
-
-		placar = [];
-
-		players = {};
-
-		function Jogador(_nome, _sexo, _tipoJogador) {
-			this.Nome = _nome;
-			this.Sexo = _sexo;
-			this.TipoJogador = _tipoJogador;
-		}
-
-		function sairJogo(){
-			document.getElementById("telaInicial").style.display = "block";
-
-			document.getElementById("telaJogo").style.display = "none";			
-		}
-
-
-		function novoJogo() {
-			players[document.getElementById("playerName").value] = new Jogador(document.getElementById("playerName").value, document.getElementById("playerSexo").value, true);
-
-			pcPont = 0;
-			playerPont = 0;
-
-			pName = '';
-			
-			pName = document.getElementById("playerName").value;
-
-			document.getElementById("telaInicial").style.display = "none";
-
-			document.getElementById("telaJogo").style.display = "block";
-
-			$("#playerInfo").trigger('reset');
-			
-
-			if (placar.indexOf(pName) == -1) {
-				$("#pPlacar").text(pName);
-				placar[pName] = new Array(pName, 0, 0);
-
-				$('#pcPontuation').text(0);
-				$('#playerPontuation').text(0);
-			}
-			else {
-				playerPont = placar[pName][0];
-				pcPont = placar[pName][1];
-
-				$('#pcPontuation').text(pcPont);
-				$('#playerPontuation').text(playerPont);
-			}
-
-			alert(placar[pName][0]);
-		}
-
-		// A $( document ).ready() block.
-		function jogada(clicked_id){
-			pcPlay = Math.floor((Math.random() * 3) + 1);
-
-			if (pcPlay == 1) {
-				$('#pcHand').attr('src', 'img/pedra.png'); 
-			} else if (pcPlay == 2) {
-				$('#pcHand').attr('src', 'img/papel.png');
-			} else if (pcPlay == 3) {
-				$('#pcHand').attr('src', 'img/tesoura.png');
-			}
-
-			if (clicked_id == 'pedra') {
-				$('#playerHand').attr('src', 'img/pedra.png'); 
-			} else if (clicked_id == 'papel') {
-				$('#playerHand').attr('src', 'img/papel.png');
-			} else if (clicked_id == 'tesoura') {
-				$('#playerHand').attr('src', 'img/tesoura.png');
-			}
-
-			if (pcPlay == 1) {
-				if (clicked_id == "pedra") {
-					pcPont += 1;
-					$('#pcPontuation').text(pcPont);	
-					playerPont += 1;
-					$('#playerPontuation').text(playerPont);	
-				}else if (clicked_id == 'papel') {
-					playerPont += 3;
-					$('#playerPontuation').text(playerPont);	
-				} else if (clicked_id == 'tesoura') {
-					pcPont += 3;
-					$('#pcPontuation').text(pcPont);	
-				}				
-			}else if (pcPlay == 2) {
-				if (clicked_id == 'pedra') {
-					pcPont += 3;
-					$('#pcPontuation').text(pcPont);	
-				}else if (clicked_id == 'papel') {
-					pcPont += 1;
-					$('#pcPontuation').text(pcPont);	
-					playerPont += 1;
-					$('#playerPontuation').text(playerPont);	
-				} else if (clicked_id == 'tesoura') {
-					playerPont += 3;
-					$('#playerPontuation').text(playerPont);	
-				}
-			} else if (pcPlay == 3) {
-				if (clicked_id == 'pedra') {
-					playerPont += 3;
-					$('#playerPontuation').text(playerPont);	
-				}else if (clicked_id == 'papel') {
-					pcPont += 3;
-					$('#pcPontuation').text(pcPont);	
-				} else if (clicked_id == 'tesoura') {
-					pcPont += 1;
-					$('#pcPontuation').text(pcPont);	
-					playerPont += 1;
-					$('#playerPontuation').text(playerPont);	
-				}
-			}
-
-			placar[pName][0] = playerPont;
-			placar[pName][1] = pcPont;
-
-		}
-	</script>
+	
 </body>
 </html>
