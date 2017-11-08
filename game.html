@@ -7,113 +7,91 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<title>Pedra, Papel, Tesoura</title>
+	<title>Jokenpo</title>
 </head>
 <body>
 
-	<div class="container">
+
+	<div class="container-fluid">
 		
-		<div class="row">
-			<div class="col-md-4" style="text-align: center;">
-				<h1>Placar</h1>
-				<div>
-					<div class="col-md-6">
-						<h3>Você</h3>
-						<h4 id="player">0</h4>
+		<div class="row" id="telaInicial">
+			<div class="col-md-12">
+				<div class="col-md-4 col-md-offset-4 vertical-center">
+					<form action="#" id="playerInfo">
+					  	<input class="col-md-12" type="text" id="playerName" name="playerName" placeholder="Name"><br>
+					  	<div class="col-md-12">
+					  		Sexo: <select class="form-control" id="playerSexo">
+					  		<option value="masculino">Masculino</option>
+					  		<option value="feminino">Feminino</option>
+						</select>
+					  	</div>
+					  	
+					  <button type="button" id="jogar" class="btn btn-primary col-md-8 col-md-offset-2" onclick="novoJogo()">Jogar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" id="telaJogo"">
+			<div class="col-md-12">
+				<div class="col-md-2">
+					<h3 id="pPlacar" style="text-align: center;"></h3>
+					<h3 id="playerPontuation" style="text-align: center;"></h3>
+				</div>
+
+				<div class="col-md-4" style="border-style: solid; border-width: 2px;">
+					<img src="img/interrogacao.jpg" id="playerHand" style="height: 100%; width: 100%;">
+				</div>
+
+				<div class="col-md-4" style="border-style: solid; border-width: 2px;">
+					<img src="img/interrogacao.jpg" id="pcHand" style="height: 100%; width: 100%;">
+				</div>
+
+				<div class="col-md-2">
+					<h3 style="text-align: center;">PC</h3>
+					<h3 id="pcPontuation" style="text-align: center;"></h3>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="col-md-4 col-md-offset-4" style="padding-top: 8%;">
+				
+					<div class="col-md-4">
+						<button type="button" id="pedra" class="btn btn-primary btn-block"> <img src="img/pedra.png" onclick="jogada('pedra')" style="max-height: 20%; max-width: 100%;"></button>	
 					</div>
-					<div class="col-md-6">
-						<h3>Computador</h3>
-						<h4 id="pc">0</h4>	
+
+					<div class="col-md-4">
+						<button type="button" id="papel" class="btn btn-primary btn-block"> <img src="img/papel.png" onclick="jogada('papel')" style="max-height: 20%; max-width: 100%;"></button>
 					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="vertical-center">
-				<div class="col-md-12">
-
-					<h3 style="text-align: center;">Faça sua jogada</h3>
-
-					<button type="button" id="pedra" class="btn btn-primary btn-block"> <img src="img/pedra.png" style="max-height: 50%; max-width: 100%;"></button>
-					<button type="button" id="papel" class="btn btn-primary btn-block"> <img src="img/papel.png" style="max-height: 50%; max-width: 100%;"></button>
-					<button type="button" id="tesoura" class="btn btn-primary btn-block"> <img src="img/tesoura.png" style="max-height: 50%; max-width: 100%;"></button>
-				</div>
-				</div>
+					
+					<div class="col-md-4">
+						<button type="button" id="tesoura" class="btn btn-primary btn-block"> <img src="img/tesoura.png" onclick="jogada('tesoura')" style="max-height: 20%; max-width: 100%;"></button>
+					</div>
+						
+				</div>				
 			</div>
 
-			<div class="col-md-4" style="text-align: center;">
-				<h1>Tempo da partida</h1>
-				<h3>0</h3>
+			<div class="col-md-12">
+				<div class="col-md-2 col-md-offset-10">
+					<button type="button" id="sair" class="btn btn-primary col-md-8 col-md-offset-2" onclick="sairJogo()">Sair</button>
+				</div>
 			</div>
-
 		</div>
 	</div>
 
 
+
+
 	<script type="text/javascript">
 
-		pontosPlayer = 0;
-		pontosPC = 0;
+		var pcPont = 0;
+		var playerPont = 0;
 
-		$(document).ready(function(){
-		    $("button").click(function(){
+		var pName = '';
 
-		    	acaoPC = Math.floor((Math.random() * 3));
+		placar = [];
 
-		    	alert("O PC jogou"+acaoPC)
-
-		        if($( this ).attr('id') == "pedra"){
-		        	if (acaoPC == 0) {
-		        		alert("Empate!");
-		        		pontosPC += 1;
-						pontosPlayer += 1;
-		        	}
-		        	else if(acaoPC == 1){
-		        		alert("Você perdeu!");
-		        		pontosPC += 3;
-		        	}
-		        	else{
-		        		alert("Você ganhou!");
-		        		pontosPlayer += 3;
-		        	}
-		        }
-
-		        if($( this ).attr('id') == "papel"){
-		        	if (acaoPC == 0) {
-		        		alert("Você ganhou!");
-		        		pontosPlayer += 3;
-		        	}
-		        	else if(acaoPC == 1){
-		        		alert("Empate!");
-		        		pontosPC += 1;
-						pontosPlayer += 1;
-		        	}
-		        	else{
-		        		alert("Você perdeu!");
-		        		pontosPC += 3;
-		        	}
-		        }
-
-		        if($( this ).attr('id') == "tesoura"){
-		        	if (acaoPC == 0) {
-		        		alert("Você perdeu!");
-		        		pontosPC += 3;
-		        	}
-		        	else if(acaoPC == 1){
-		        		alert("Você ganhou!");
-		        		pontosPlayer += 3;
-		        	}
-		        	else{
-		        		alert("Empate!");
-		        		pontosPC += 1;
-						pontosPlayer += 1;
-		        	}
-		        }
-
-		        $("#player").text(pontosPlayer);
-		        $("#pc").text(pontosPC);
-
-		    });
-		});
+		players = {};
 
 		function Jogador(_nome, _sexo, _tipoJogador) {
 			this.Nome = _nome;
@@ -121,6 +99,113 @@
 			this.TipoJogador = _tipoJogador;
 		}
 
+		function sairJogo(){
+			document.getElementById("telaInicial").style.display = "block";
+
+			document.getElementById("telaJogo").style.display = "none";			
+		}
+
+
+		function novoJogo() {
+			players[document.getElementById("playerName").value] = new Jogador(document.getElementById("playerName").value, document.getElementById("playerSexo").value, true);
+
+			pcPont = 0;
+			playerPont = 0;
+
+			pName = '';
+			
+			pName = document.getElementById("playerName").value;
+
+			document.getElementById("telaInicial").style.display = "none";
+
+			document.getElementById("telaJogo").style.display = "block";
+
+			$("#playerInfo").trigger('reset');
+			
+
+			if (placar.indexOf(pName) == -1) {
+				$("#pPlacar").text(pName);
+				placar[pName] = new Array(pName, 0, 0);
+
+				$('#pcPontuation').text(0);
+				$('#playerPontuation').text(0);
+			}
+			else {
+				playerPont = placar[pName][0];
+				pcPont = placar[pName][1];
+
+				$('#pcPontuation').text(pcPont);
+				$('#playerPontuation').text(playerPont);
+			}
+
+			alert(placar[pName][0]);
+		}
+
+		// A $( document ).ready() block.
+		function jogada(clicked_id){
+			pcPlay = Math.floor((Math.random() * 3) + 1);
+
+			if (pcPlay == 1) {
+				$('#pcHand').attr('src', 'img/pedra.png'); 
+			} else if (pcPlay == 2) {
+				$('#pcHand').attr('src', 'img/papel.png');
+			} else if (pcPlay == 3) {
+				$('#pcHand').attr('src', 'img/tesoura.png');
+			}
+
+			if (clicked_id == 'pedra') {
+				$('#playerHand').attr('src', 'img/pedra.png'); 
+			} else if (clicked_id == 'papel') {
+				$('#playerHand').attr('src', 'img/papel.png');
+			} else if (clicked_id == 'tesoura') {
+				$('#playerHand').attr('src', 'img/tesoura.png');
+			}
+
+			if (pcPlay == 1) {
+				if (clicked_id == "pedra") {
+					pcPont += 1;
+					$('#pcPontuation').text(pcPont);	
+					playerPont += 1;
+					$('#playerPontuation').text(playerPont);	
+				}else if (clicked_id == 'papel') {
+					playerPont += 3;
+					$('#playerPontuation').text(playerPont);	
+				} else if (clicked_id == 'tesoura') {
+					pcPont += 3;
+					$('#pcPontuation').text(pcPont);	
+				}				
+			}else if (pcPlay == 2) {
+				if (clicked_id == 'pedra') {
+					pcPont += 3;
+					$('#pcPontuation').text(pcPont);	
+				}else if (clicked_id == 'papel') {
+					pcPont += 1;
+					$('#pcPontuation').text(pcPont);	
+					playerPont += 1;
+					$('#playerPontuation').text(playerPont);	
+				} else if (clicked_id == 'tesoura') {
+					playerPont += 3;
+					$('#playerPontuation').text(playerPont);	
+				}
+			} else if (pcPlay == 3) {
+				if (clicked_id == 'pedra') {
+					playerPont += 3;
+					$('#playerPontuation').text(playerPont);	
+				}else if (clicked_id == 'papel') {
+					pcPont += 3;
+					$('#pcPontuation').text(pcPont);	
+				} else if (clicked_id == 'tesoura') {
+					pcPont += 1;
+					$('#pcPontuation').text(pcPont);	
+					playerPont += 1;
+					$('#playerPontuation').text(playerPont);	
+				}
+			}
+
+			placar[pName][0] = playerPont;
+			placar[pName][1] = pcPont;
+
+		}
 	</script>
 </body>
 </html>
