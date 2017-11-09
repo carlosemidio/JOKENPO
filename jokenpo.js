@@ -11,6 +11,12 @@
 
 		var partidas = {};
 
+		var gameTime = 0;
+
+		var gameRounds = 0;
+
+		var timeCounter;
+
 		function Jogador(_nome, _sexo, _tipoJogador) {
 			this.Nome = _nome;
 			this.Sexo = _sexo;
@@ -21,6 +27,8 @@
 			document.getElementById("telaInicial").style.display = "block";
 
 			document.getElementById("telaJogo").style.display = "none";			
+
+			timeStop();
 		}
 
 
@@ -31,7 +39,13 @@
 			playerPont = 0;
 
 			pName = '';
+
+			gameTime = 0;
+
+			timeCounter = setInterval(timeAdd, 1000);
 			
+			gameRounds = 0;
+
 			pName = document.getElementById("playerName").value;
 
 			document.getElementById("telaInicial").style.display = "none";
@@ -42,39 +56,76 @@
 			$("#playerInfo").trigger('reset');
 			
 
-			if (typeof placar[pName] !== 'undefined' && placar[pName] !== null) {
-				if (placar.forEach(hasInArray) == false) {
+			if (typeof placar[0] !== 'undefined' && placar[0] !== null) {
+				
+				if (hasInArray(placar) < 0) {
 					$("#pPlacar").text(pName);
-					placar[pName] = new Array(pName, 0, 0);
+					placar[placar.length] = new Array(pName, 0, 0, 0, 0);
 
+					$('#roundsShow').text("Partidas: 0");
+					$('#timeShow').text("Tempo: 0");
 					$('#pcPontuation').text(0);
 					$('#playerPontuation').text(0);
 				}
 				else {
-					playerPont = placar[pName][1];
-					pcPont = placar[pName][2];
 
+					var i = hasInArray(placar);
+					playerPont = placar[i][1];
+					pcPont = placar[i][2];
+					gameRounds = placar[i][3];
+					gameTime = placar[i][4];
+					
+
+					$('#roundsShow').text("Partidas: "+gameTime);
+					$('#timeShow').text("Tempo: "+gameTime);
 					$('#pcPontuation').text(pcPont);
 					$('#playerPontuation').text(playerPont);
+
 				}
 			} else {
 				$("#pPlacar").text(pName);
-				placar[pName] = new Array(pName, 0, 0);
+				placar[placar.length] = new Array(pName, 0, 0, 0, 0);
 
+				$('#roundsShow').text("Partidas: 0");
+				$('#timeShow').text("Tempo: 0");
 				$('#pcPontuation').text(0);
 				$('#playerPontuation').text(0);
 			}
+
+		}
+
+		function timeAdd() {
+		    gameTime += 1;
+
+		    for (var i = 0; i < placar.length; i++) {
+				if (placar[i][0] == pName) {
+					placar[i][4] = gameTime;
+					break;
+				}
+			}
+
+			$('#timeShow').text("Tempo: "+gameTime);
+		}
+
+		function timeStop() {
+		    clearInterval(timeCounter);
 		}
 
 		function showScores(){
 
-			if (typeof placar[pName] !== 'undefined' && placar[pName] !== null) {
+			if (typeof placar[0] !== 'undefined' && placar[0] !== null) {
 				document.getElementById("telaInicial").style.display = "none";
 				document.getElementById("telaJogo").style.display = "none";
 
 				document.getElementById("scoresTable").style.display = "block";
 
-				placar.forEach(insertRows());
+				$('#mytable > tbody >tr').remove();
+
+				for (var i = 0, len = placar.length; i < len; i++) {
+				  $('#mytable').find('tbody').append("<tr><td>"+placar[i][0]+"</td><td>"+placar[i][1]+"</td><td>"+placar[i][2]+"</td><td>"+placar[i][3]+"</td><td>"+placar[i][4]+"</td></tr>");
+				}
+
+				//placar.forEach(insertRows);
 			}else{
 				alert("Não há scores ainda!");
 			}
@@ -82,17 +133,21 @@
 		}
 
 
-		function insertRows(item, index) {	
-			$('#mytable').find('tbody').append("<tr><td>"+item[item.name][0]+"</td><td>"+item[item.name][1]+"</td><td>"+item[item.name][2]+"</td></tr>"); 
-		}
-
-
-		function hasInArray(item, index) {	
-			if (item.name == pName) {
-				return true;
+		function hasInArray(array) {	
+			for (var i = array.length - 1; i >= 0; i--) {
+				if (array[i][0] == pName) {
+					return i;
+				}
 			}
 
-			return false;
+			return -1;
+		}
+
+		function backToInitial(){
+			document.getElementById("telaJogo").style.display = "none";	
+			document.getElementById("scoresTable").style.display = "none";
+
+			document.getElementById("telaInicial").style.display = "block";
 		}
 
 
@@ -157,8 +212,20 @@
 				}
 			}
 
-			placar[pName][1] = playerPont;
-			placar[pName][2] = pcPont;
+			gameRounds += 1;
+
+
+			$('#roundsShow').text(gameRounds);
+
+			for (var i = 0; i < placar.length; i++) {
+				if (placar[i][0] == pName) {
+					placar[i][1] = playerPont;
+					placar[i][2] = pcPont;
+					placar[i][3] = gameRounds;
+					placar[i][4] = gameTime;
+					break;
+				}
+			}
 
 			var options = ["pedra", "papel", "tesoura"];
 

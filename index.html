@@ -7,26 +7,112 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<title>Registro</title>
+	<title>Jokenpo</title>
 </head>
 <body>
-	<div class="container vertical-center">
-		<div class="col-md-2 col-md-offset-5">
 
-			<p style="text-align: center;">Informe seus dados</p>
 
-			<form action="game.html" method="post">
-				<input type="text" name="Name" placeholder="Name">
-				<br>
-				Sexo:<br>
-				<select>
-					<option value="M">Masculino</option>
-					<option value="F">Feminino</option>
-				</select>
-				<br><br>
-				<input type="submit" value="Jogar">
-			</form> 
+	<div class="container-fluid">
+		
+		<div class="row" id="telaInicial">
+			<div class="col-md-12">
+				<div class="col-md-4 col-md-offset-4 vertical-center">
+					<form id="playerInfo">
+					  	<div class="form-group">
+						  	<label for="playerName">Nome:</label>
+						  	<input class="form-control" type="text" id="playerName" name="playerName" placeholder="Name">
+				  			<label for="playerSexo">Sexo:</label>
+				  			<select class="form-control" id="playerSexo">
+						  		<option value="masculino">Masculino</option>
+						  		<option value="feminino">Feminino</option>
+							</select><br>
+						  
+							<div style="text-align: center;">
+								<button type="button" id="jogar" class="btn btn-primary" onclick="novoJogo()">Jogar</button>
+				  				<button type="button" id="scoresButton" class="btn btn-primary" onclick="showScores()">Scores</button>
+				  			</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" id="scoresTable">
+			<div class="col-md-6 col-md-offset-3">
+				<table style="width:100%; height: 100%;" id="mytable">
+					<thead>
+						<tr>
+							<th>Jogador</th>
+							<th>Pontuação</th>
+							<th>PC pontuação</th>
+							<th>Número de partidas</th>
+							<th>Tempo</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+
+				<button type="button" id="backButton" class="btn btn-primary col-md-8 col-md-offset-2" onclick="backToInitial()">Voltar</button>
+			</div>
+		</div>
+
+		<div class="row" id="telaJogo"">
+
+			<div class="col-md-12">
+				<div class="col-md-4 col-md-offset-2" style="text-align: center;"><h3 id="timeShow">Tempo: 0</h3></div>
+				<div class="col-md-4" style="text-align: center;"><h3 id="roundsShow">Partidas: 0</h3></div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="col-md-2">
+					<h3 id="pPlacar" style="text-align: center;"></h3>
+					<h3 id="playerPontuation" style="text-align: center;"></h3>
+				</div>
+
+				<div class="col-md-4" style="border-style: solid; border-width: 2px;">
+					<img src="img/interrogacao.jpg" id="playerHand" style="height: 100%; width: 100%;">
+				</div>
+
+				<div class="col-md-4" style="border-style: solid; border-width: 2px;">
+					<img src="img/interrogacao.jpg" id="pcHand" style="height: 100%; width: 100%;">
+				</div>
+
+				<div class="col-md-2">
+					<h3 style="text-align: center;">PC</h3>
+					<h3 id="pcPontuation" style="text-align: center;"></h3>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="col-md-4 col-md-offset-4" style="padding-top: 8%;">
+				
+					<div class="col-md-4">
+						<button type="button" id="pedra" class="btn btn-primary btn-block"> <img src="img/pedra.png" onclick="jogada('pedra')" style="max-height: 20%; max-width: 100%;"></button>	
+					</div>
+
+					<div class="col-md-4">
+						<button type="button" id="papel" class="btn btn-primary btn-block"> <img src="img/papel.png" onclick="jogada('papel')" style="max-height: 20%; max-width: 100%;"></button>
+					</div>
+					
+					<div class="col-md-4">
+						<button type="button" id="tesoura" class="btn btn-primary btn-block"> <img src="img/tesoura.png" onclick="jogada('tesoura')" style="max-height: 20%; max-width: 100%;"></button>
+					</div>
+						
+				</div>				
+			</div>
+
+			<div class="col-md-12">
+				<div class="col-md-2 col-md-offset-10">
+					<button type="button" id="sair" class="btn btn-primary col-md-8 col-md-offset-2" onclick="sairJogo()">Sair</button>
+				</div>
+			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript" src="jokenpo.js"></script>
+
+	
 </body>
 </html>

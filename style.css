@@ -7,3 +7,13 @@
   justify-content: center;
 }
 
+table{
+	margin-top: 100px;
+	border: 1px solid black;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+ 	border: 1px solid;   
+}
