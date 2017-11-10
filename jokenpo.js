@@ -131,6 +131,7 @@ function showScores(){
 		document.getElementById("scoresTable").style.display = "block";
 
 		$('#mytable > tbody >tr').remove();
+		$('#mytable > tbody > div').remove();
 
 		for (var i = 0, len = placar.length; i < len; i++) {
 			$('#mytable').find('tbody').append("<tr data-toggle='collapse' data-target="+"#demo"+i+"><td>"+placar[i][0]+"</td><td>"+placar[i][1]+"</td><td>"+placar[i][2]+"</td><td>"+placar[i][3]+"</td><td>"+placar[i][4]['h']+":"+placar[i][4]['m']+":"+placar[i][4]['s']+"</td></tr>");
@@ -138,7 +139,7 @@ function showScores(){
 			var str = "";
 
 			for (var j = 0; j < partidas[placar[i][0]].length; j++) {
-				str += (partidas[placar[i][0]][j][0]+" "+partidas[placar[i][0]][j][1]+"<br>");
+				str += partidas[placar[i][0]][j][0]+" "+partidas[placar[i][0]][j][1]+"<br>";
 			}
 
 			$('#mytable').find('tbody').append("<div id=demo"+i+" class='collapse'>"+str+"</div>");
