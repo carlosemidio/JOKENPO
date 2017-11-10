@@ -143,7 +143,7 @@ function showScores(){
 		var str = "<tr><th>Jogador</th><th>Pontuação</th><th>PC pontuação</th><th>Número de partidas</th><th>Tempo</th></tr>";		
 
 		for (var i = 0, len = placar.length; i < len; i++) {
-			str += "<tr data-toggle='collapse' data-target="+"#demo"+i+"><td>"+placar[i][0]+"</td><td>"+placar[i][1]+"</td><td>"+placar[i][2]+"</td><td>"+placar[i][3]+"</td><td>"+placar[i][4]['h']+":"+placar[i][4]['m']+":"+placar[i][4]['s']+"</td></tr>";
+			str += "<tr data-toggle='collapse' data-target="+"#demo"+i+" style='cursor:pointer'><td>"+placar[i][0]+"</td><td>"+placar[i][1]+"</td><td>"+placar[i][2]+"</td><td>"+placar[i][3]+"</td><td>"+placar[i][4]['h']+":"+placar[i][4]['m']+":"+placar[i][4]['s']+"</td></tr>";
 
 			str += "<tr class='collapse out' id=demo"+i+"><td colspan='5'><div style='text-align:center;'>Detalhes das partidas</div>";
 
