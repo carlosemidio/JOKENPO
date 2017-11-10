@@ -140,17 +140,17 @@ function showScores(){
 
 		$('#mytable').empty();
 
-		var str = "<tr><th>Jogador</th><th>Pontuação</th><th>PC pontuação</th><th>Número de partidas</th><th>Tempo</th></tr>";		
+		var str = "<tr style='background-color: #337ab7; color:white;'><th>Jogador</th><th>Pontuação</th><th>PC pontuação</th><th>Número de partidas</th><th>Tempo</th></tr>";		
 
 		for (var i = 0, len = placar.length; i < len; i++) {
-			str += "<tr data-toggle='collapse' data-target="+"#demo"+i+" style='cursor:pointer'><td>"+placar[i][0]+"</td><td>"+placar[i][1]+"</td><td>"+placar[i][2]+"</td><td>"+placar[i][3]+"</td><td>"+placar[i][4]['h']+":"+placar[i][4]['m']+":"+placar[i][4]['s']+"</td></tr>";
+			str += "<tr style='background-color:#80aace; color:white;'><td data-toggle='collapse' data-target="+"#demo"+i+" class='collapsible' style='cursor:pointer;'>"+placar[i][0]+"</td><td>"+placar[i][1]+"</td><td>"+placar[i][2]+"</td><td>"+placar[i][3]+"</td><td>"+placar[i][4]['h']+":"+placar[i][4]['m']+":"+placar[i][4]['s']+"</td></tr>";
 
-			str += "<tr class='collapse out' id=demo"+i+"><td colspan='5'><div style='text-align:center;'>Detalhes das partidas</div>";
+			str += "<tr class='collapse' id=demo"+i+"><td colspan='5'><div style='text-align:center;'>Detalhes das partidas, a coluna vermelha exibe os resultados das partidas</div>";
 
-			str += "<table colspan='2'><tr><th>"+placar[i][0]+"</th><th>PC</th><th>Vencedor</th><th>Duração da partida</th></tr>";
+			str += "<table><tr><th>Partida</th><th>"+placar[i][0]+"</th><th>PC</th><th style='background-color: #ff9999;'>Vencedor</th><th>Duração da partida</th></tr>";
 
 			for (var j = 0; j < partidas[placar[i][0]].length; j++) {
-				str += "<tr><td>"+partidas[placar[i][0]][j][0]+"</td><td>"+partidas[placar[i][0]][j][1]+"</td><td>"+partidas[placar[i][0]][j][2]+"</td><td>"+partidas[placar[i][0]][j][3]+"</td></tr>";
+				str += "<tr><td>"+(j+1)+"</td><td>"+partidas[placar[i][0]][j][0]+"</td><td>"+partidas[placar[i][0]][j][1]+"</td><td style='background-color: #ffcccc;'>"+partidas[placar[i][0]][j][2]+"</td><td>"+partidas[placar[i][0]][j][3]+"</td></tr>";
 			}
 
 			str += "</table></div></td></tr>";

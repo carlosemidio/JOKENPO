@@ -16,7 +16,9 @@
 		
 		<div class="row" id="telaInicial">
 			<div class="col-md-12">
-				<div class="col-md-4 col-md-offset-4 vertical-center">
+				<h1 style="text-align: center;">JOKENPO</h1>
+
+				<div class="col-md-6 col-md-offset-3 vertical-center">
 					<form id="playerInfo">
 					  	<div class="form-group">
 						  	<label for="playerName">Nome:</label>
@@ -38,11 +40,15 @@
 		</div>
 
 		<div class="row" id="scoresTable">
-			<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="col-md-12" style="text-align: center; text-justify: inter-word;"> <h2>As linhas em azul mais claro representam os dados dos jogogadores, clique no nome do jogador para ver os detalhes de todas as suas partidas!</h2></div>
+
 				<table id="mytable">	
 				</table>
 
-				<button type="button" id="backButton" class="btn btn-primary col-md-8 col-md-offset-2" onclick="backToInitial()">Voltar</button>
+				<div class="col-md-4 col-md-offset-4 vertical-bottom">
+					<button type="button" id="backButton" class="btn btn-primary" onclick="backToInitial()">Voltar</button>
+				</div>
 			</div>
 		</div>
 
@@ -59,12 +65,12 @@
 					<h3 id="playerPontuation" style="text-align: center;"></h3>
 				</div>
 
-				<div class="col-md-4" id="playerHand" style="border-style: solid; border-width: 2px;">
+				<div class="col-md-4" id="playerHand" style="border: 1px solid #ddd; border-width: 2px;">
 					<img src="img/interrogacao.jpg" id="playerHandIMG" style="height: 100%; width: 100%;">
 					<div class="centered"><h2></h2></div>
 				</div>
 
-				<div class="col-md-4" id="pcHand" style="border-style: solid; border-width: 2px;">
+				<div class="col-md-4" id="pcHand" style="border: 1px solid #ddd; border-width: 2px;">
 						<img src="img/interrogacao.jpg" id="pcHandIMG" style="height: 100%; width: 100%;">
 						<div class="centered"><h2></h2></div>
 				</div>
