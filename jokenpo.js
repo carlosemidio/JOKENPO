@@ -19,6 +19,8 @@ var timeCounter;
 
 var startInterval = 0;
 
+var partidaStart = {};
+
 function Jogador(_nome, _sexo, _tipoJogador) {
 	this.Nome = _nome;
 	this.Sexo = _sexo;
@@ -43,6 +45,8 @@ function novoJogo() {
 	pName = '';
 
 	gameTime = {"h":0, "m":0,"s":0};
+
+	partidaStart = {"h":0, "m":0,"s":0};
 
 	timeCounter = setInterval(timeAdd, 1000);
 	
@@ -77,6 +81,10 @@ function novoJogo() {
 			gameTime["h"] = placar[i][4]["h"];
 			gameTime["m"] = placar[i][4]["m"];
 			gameTime["s"] = placar[i][4]["s"];
+
+			partidaStart["h"] = placar[i][4]["h"];
+			partidaStart["m"] = placar[i][4]["m"];
+			partidaStart["s"] = placar[i][4]["s"];
 
 			$('#roundsShow').text("Partidas: "+gameRounds);
 			$('#timeShow').text("Tempo: "+gameTime["h"]+":"+gameTime["m"]+":"+gameTime["s"]);
@@ -130,20 +138,25 @@ function showScores(){
 
 		document.getElementById("scoresTable").style.display = "block";
 
-		$('#mytable > tbody >tr').remove();
-		$('#mytable > tbody > div').remove();
+		$('#mytable').empty();
+
+		var str = "<tr><th>Jogador</th><th>Pontuação</th><th>PC pontuação</th><th>Número de partidas</th><th>Tempo</th></tr>";		
 
 		for (var i = 0, len = placar.length; i < len; i++) {
-			$('#mytable').find('tbody').append("<tr data-toggle='collapse' data-target="+"#demo"+i+"><td>"+placar[i][0]+"</td><td>"+placar[i][1]+"</td><td>"+placar[i][2]+"</td><td>"+placar[i][3]+"</td><td>"+placar[i][4]['h']+":"+placar[i][4]['m']+":"+placar[i][4]['s']+"</td></tr>");
+			str += "<tr data-toggle='collapse' data-target="+"#demo"+i+"><td>"+placar[i][0]+"</td><td>"+placar[i][1]+"</td><td>"+placar[i][2]+"</td><td>"+placar[i][3]+"</td><td>"+placar[i][4]['h']+":"+placar[i][4]['m']+":"+placar[i][4]['s']+"</td></tr>";
 
-			var str = "";
+			str += "<tr class='collapse out' id=demo"+i+"><td colspan='5'><div style='text-align:center;'>Detalhes das partidas</div>";
+
+			str += "<table colspan='2'><tr><th>"+placar[i][0]+"</th><th>PC</th><th>Vencedor</th><th>Duração da partida</th></tr>";
 
 			for (var j = 0; j < partidas[placar[i][0]].length; j++) {
-				str += partidas[placar[i][0]][j][0]+" "+partidas[placar[i][0]][j][1]+"<br>";
+				str += "<tr><td>"+partidas[placar[i][0]][j][0]+"</td><td>"+partidas[placar[i][0]][j][1]+"</td><td>"+partidas[placar[i][0]][j][2]+"</td><td>"+partidas[placar[i][0]][j][3]+"</td></tr>";
 			}
 
-			$('#mytable').find('tbody').append("<div id=demo"+i+" class='collapse'>"+str+"</div>");
+			str += "</table></div></td></tr>";
 		}
+
+		$('#mytable').append(str);
 
 		//placar.forEach(insertRows);
 	}else{
@@ -335,10 +348,49 @@ function jogada(clicked_id){
 
 		var options = ["pedra", "papel", "tesoura"];
 
-		if (typeof partidas[pName] !== 'undefined' && partidas[pName] !== null) {
-			partidas[pName].push([clicked_id, options[pcPlay-1]]);
+		var winner = "";
+
+		if ($('#playerHand > div > h2').text() == "Venceu") {
+			winner = pName;
+		} else if ($('#playerHand > div > h2').text() == "Perdeu") {
+			winner = "PC";
+		} else if ($('#playerHand > div > h2').text() == "Empate") {
+			winner = "Empate";
+		}
+
+		var horas = gameTime['h'] - partidaStart['h'];
+		var minutos = 0;
+		var segundos = 0;
+
+		if (gameTime['m'] < partidaStart['m']) {
+			horas -= 1;
+
+			minutos = 60 - partidaStart['m'];
+
+			minutos += gameTime['m'];
 		}else{
-			partidas[pName] = Array([clicked_id, options[pcPlay-1]]);
+			minutos = gameTime['m'] - partidaStart['m'];			
+		}
+
+		if (gameTime['s'] < partidaStart['s']) {
+			minutos -= 1;
+
+			segundos = 60 - partidaStart['s'];
+
+			segundos += gameTime['s'];
+		}else{
+			segundos = gameTime['s'] - partidaStart['s'];			
+		}
+
+
+		partidaStart['h'] = gameTime['h'];
+		partidaStart['m'] = gameTime['m'];
+		partidaStart['s'] = gameTime['s'];
+
+		if (typeof partidas[pName] !== 'undefined' && partidas[pName] !== null) {
+			partidas[pName].push([clicked_id, options[pcPlay-1], winner, horas+":"+minutos+":"+segundos]);
+		}else{
+			partidas[pName] = Array([clicked_id, options[pcPlay-1], winner, horas+":"+minutos+":"+segundos]);
 		}
 
 		document.getElementById("pedra").disabled=true;
