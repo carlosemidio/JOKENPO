@@ -9,7 +9,7 @@ var placar = new Array();
 
 var players = {};
 
-var partidas = {};
+var partidas = new Array();
 
 var gameTime = {};
 
@@ -59,7 +59,7 @@ function novoJogo() {
 	
 
 	if (typeof placar[0] !== 'undefined' && placar[0] !== null) {
-		
+
 		if (hasInArray(placar) < 0) {
 			$("#pPlacar").text(pName);
 			placar[placar.length] = new Array(pName, 0, 0, 0, gameTime);
@@ -68,8 +68,7 @@ function novoJogo() {
 			$('#timeShow').text("Tempo: "+gameTime["h"]+":"+gameTime["m"]+":"+gameTime["s"]);
 			$('#pcPontuation').text(0);
 			$('#playerPontuation').text(0);
-		}
-		else {
+		} else {
 
 			var i = hasInArray(placar);
 			playerPont = placar[i][1];
@@ -134,7 +133,15 @@ function showScores(){
 		$('#mytable > tbody >tr').remove();
 
 		for (var i = 0, len = placar.length; i < len; i++) {
-		  $('#mytable').find('tbody').append("<tr><td>"+placar[i][0]+"</td><td>"+placar[i][1]+"</td><td>"+placar[i][2]+"</td><td>"+placar[i][3]+"</td><td>"+placar[i][4]['h']+":"+placar[i][4]['m']+":"+placar[i][4]['s']+"</td></tr>");
+			$('#mytable').find('tbody').append("<tr data-toggle='collapse' data-target="+"#demo"+i+"><td>"+placar[i][0]+"</td><td>"+placar[i][1]+"</td><td>"+placar[i][2]+"</td><td>"+placar[i][3]+"</td><td>"+placar[i][4]['h']+":"+placar[i][4]['m']+":"+placar[i][4]['s']+"</td></tr>");
+
+			var str = "";
+
+			for (var j = 0; j < partidas[placar[i][0]].length; j++) {
+				str += (partidas[placar[i][0]][j][0]+" "+partidas[placar[i][0]][j][1]+"<br>");
+			}
+
+			$('#mytable').find('tbody').append("<div id=demo"+i+" class='collapse'>"+str+"</div>");
 		}
 
 		//placar.forEach(insertRows);
@@ -327,7 +334,11 @@ function jogada(clicked_id){
 
 		var options = ["pedra", "papel", "tesoura"];
 
-		partidas[pName] = new Array(clicked_id, options[pcPlay-1])
+		if (typeof partidas[pName] !== 'undefined' && partidas[pName] !== null) {
+			partidas[pName].push([clicked_id, options[pcPlay-1]]);
+		}else{
+			partidas[pName] = Array([clicked_id, options[pcPlay-1]]);
+		}
 
 		document.getElementById("pedra").disabled=true;
 		document.getElementById("papel").disabled=true;
@@ -344,5 +355,4 @@ function jogada(clicked_id){
 			document.getElementById("tesoura").disabled=false; 
 		}, 1000);
 	}
-
 }
