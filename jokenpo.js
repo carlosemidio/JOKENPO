@@ -158,7 +158,6 @@ function showScores(){
 
 		$('#mytable').append(str);
 
-		//placar.forEach(insertRows);
 	}else{
 		alert("Não há scores ainda!");
 	}
