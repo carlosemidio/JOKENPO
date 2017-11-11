@@ -3,6 +3,9 @@ body{
 	color: white;
 }
 
+#scoresTable{
+	display: none;
+}
 
 #playerInfo{
 	border: 1px solid #ddd;
@@ -12,6 +15,7 @@ body{
 
 #telaJogo{
 	color:white;
+	display: none;
 }
 
 .vertical-center {
@@ -25,6 +29,7 @@ body{
 
 table{
 	width: 100%;
+	background-color: gray;
 }
 
 th, td {
