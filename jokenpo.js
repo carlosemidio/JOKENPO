@@ -12,6 +12,11 @@ var timeCounter;
 var startInterval = 0;
 var partidaStart = {};
 
+$("#playerInfo").submit(function(e){
+    novoJogo();
+    return false;
+});
+
 
 /* Objeto do tipo jogador */
 function Jogador(nome, sexo, tipoJogador) {
